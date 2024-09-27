@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script
+            src="https://cdn.tiny.cloud/1/xm4wm53gf1zozbblvgjnepvd8wmg1u8p0omo5tt4p9gk6pek/tinymce/5/tinymce.min.js"
+            referrerpolicy="origin"
+        ></script>
+    </head>
+    <body>
+        <div class="parent_text_editor">
+            <button id="addEditorButton">Add Editor</button>
+            <div id="editorContainer"></div>
+        </div>
+        <script>
+            // معرف فريد لكل محرر
+            let editorCounter = 0;
+
+            // عند الضغط على زر "Add Editor"
+            // $(document).on("click", ".add_row", function() {
+            $(document).on("click",".add_row,#addEditorButton", function () {
+                // زيادة العداد للحصول على معرف فريد لكل محرر
+                editorCounter++;
+
+                // إنشاء عنصر جديد للمحرر
+                let editorId = "editor_" + editorCounter;
+                let newEditorHtml = `<textarea id="${editorId}" class="editor"></textarea>`;
+var row=`  <div style="width: 100%;display: flex;justify-content: space-between;align-items: center;"
+                                    class="main_row">
+                                    <div class="row rounded cancel"
+                                        style="background: #8080801a;margin-bottom: 20px;width: 1000px;margin-left: 0px;">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="inputGroup-sizing-default">Title</span>
+                                            </div>
+                                            <input type="text" class="form-control" aria-label="Default"
+                                                value="" name="title[]"
+                                                aria-describedby="inputGroup-sizing-default">
+                                        </div>
+                                      ${newEditorHtml}
+
+                                    
+
+                                        </textarea>
+                                    </div>
+                                    <div class="actions" style="display: flex;flex-direction: column;">
+                                        <button type="button" style="height: 50px;margin-bottom: 10px;"
+                                            class="btn btn-outline-primary add_row">Add</button>
+                                        <button type="button" style="height: 50px;"
+                                            class="btn btn-outline-danger delete_row">Delete</button>
+
+                                    </div>
+                                </div>`
+                // إضافة المحرر الجديد إلى DOM
+                $(".parent_text_editor").append(row);
+
+                // تهيئة المحرر باستخدام TinyMCE
+                tinymce.init({
+                    selector: `#${editorId}`, 
+                    menubar: false,
+                    plugins: ["image"],
+                    toolbar:
+                        "undo redo | alignleft aligncenter alignright | image",
+                    images_upload_url: "/upload",
+                    automatic_uploads: true,
+                    file_picker_types: "image",
+                });
+            });
+        </script>
+    </body>
+</html>

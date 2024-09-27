@@ -1,0 +1,17 @@
+<script>
+    $(document).ready(function () {
+        $("#add").submit(function (e) {
+            let values = [];
+
+            $(".order").each(function () {
+                values.push($(this).val());
+            });
+            let uniqueValues = [...new Set(values)];
+
+            if (uniqueValues.length < values.length) {
+                alert("Duplicate Ordering found!");
+                e.preventDefault();
+            }
+        });
+    });
+</script>
